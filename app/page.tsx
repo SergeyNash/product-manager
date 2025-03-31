@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { MapLocation } from "@/components/map-location"
 import { SkillInventory } from "@/components/skill-inventory"
 import { Achievements } from "@/components/achievements"
@@ -9,8 +10,9 @@ import Contact from "@/components/contact"
 import { GameCharacter } from "@/components/game-character"
 import { Dialog } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { ArrowDown, ArrowLeft, ArrowRight } from "lucide-react"
+import { Gamepad2 } from "lucide-react"
 import type { CareerLocation } from "@/lib/career-data"
+import { UserProfile } from "@/components/user-profile"
 
 // Предварительно загруженные данные о локациях (будут заменены на данные из API)
 const defaultLocations: CareerLocation[] = [
@@ -74,7 +76,13 @@ export default function Home() {
         const response = await fetch("/api/career-locations")
         if (response.ok) {
           const data = await response.json()
-          setLocations(data)
+          if (Array.isArray(data) && data.length > 0) {
+            setLocations(data)
+          } else {
+            console.log("Получены некорректные данные о локациях, используем данные по умолчанию")
+          }
+        } else {
+          console.error("Ошибка при загрузке данных о локациях:", response.statusText)
         }
       } catch (error) {
         console.error("Ошибка при загрузке данных о локациях:", error)
@@ -183,6 +191,16 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-black text-white font-['Press_Start_2P',monospace] overflow-hidden">
+      <UserProfile />
+
+      {/* Кнопка для мини-игры */}
+      <Link href="/mini-game" className="fixed top-4 right-4 z-40">
+        <Button className="bg-purple-700 hover:bg-purple-600 flex items-center gap-2 px-4 py-2">
+          <Gamepad2 className="h-4 w-4" />
+          <span className="text-xs">Мини-игра</span>
+        </Button>
+      </Link>
+
       {/* Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t-2 border-gray-700 p-2 z-40">
         <div className="flex justify-around max-w-3xl mx-auto">
@@ -493,16 +511,6 @@ export default function Home() {
             <div className="absolute bottom-[25%] right-[20%] text-4xl opacity-30">🏔️</div>
             <div className="absolute top-[60%] left-[60%] text-3xl opacity-20">🌊</div>
 
-            <div className="absolute top-4 left-4 bg-gray-900 bg-opacity-80 p-3 rounded-lg border-2 border-gray-700 z-30">
-              <h1 className="text-xl text-yellow-400 mb-2">Карта профессионального пути</h1>
-              <p className="text-xs text-gray-300">Кликните на локацию или используйте стрелки для перемещения</p>
-              <div className="mt-2 flex items-center justify-center gap-1 text-xs text-gray-400">
-               </div>
-              <div className="mt-1 flex items-center justify-center gap-1 text-xs text-gray-400">
-                <div className="px-2 border border-gray-600 rounded">Space</div> - вход в локацию
-              </div>
-            </div>
-
             {/* Индикатор ближайшей локации */}
             {nearestLocationRef.current && (
               <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-gray-900 bg-opacity-80 px-3 py-2 rounded-lg border border-yellow-500 z-30 text-xs text-yellow-400 flex items-center">
@@ -527,6 +535,14 @@ export default function Home() {
                 onClick={() => handleLocationClick(location.id, location.x, location.y)}
               />
             ))}
+
+            <div className="absolute bottom-24 right-4 bg-gray-900 bg-opacity-80 p-3 rounded-lg border-2 border-gray-700 z-30">
+              <h1 className="text-xl text-yellow-400 mb-2">Карта профессионального пути</h1>
+              <p className="text-xs text-gray-300">Кликните на локацию или используйте стрелки для перемещения</p>
+              <div className="mt-1 flex items-center justify-center gap-1 text-xs text-gray-400">
+                <div className="px-2 border border-gray-600 rounded">Space</div> - вход в локацию
+              </div>
+            </div>
           </div>
         )}
 

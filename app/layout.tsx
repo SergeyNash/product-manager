@@ -8,6 +8,7 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata = {
   title: "Продуктовый менеджер - Карта профессионального пути",
   description: "Интерактивное портфолио продуктового менеджера в стиле пиксельной RPG игры",
+  metadataBase: new URL("https://yourusername.github.io/product-manager-portfolio"),
     generator: 'v0.dev'
 }
 

@@ -11,10 +11,11 @@ export default function MiniGame() {
   const [gameOver, setGameOver] = useState(false)
   const [score, setScore] = useState(0)
   const [highScore, setHighScore] = useState(0)
+  const [playerDirection, setPlayerDirection] = useState("up") // Изменено с "right" на "up"
 
   // Game state
   const gameState = useRef({
-    player: { x: 50, y: 350, width: 30, height: 30, speed: 5 },
+    player: { x: 50, y: 350, width: 30, height: 30, speed: 20 }, // Увеличена скорость с 8 до 20
     hearts: [] as { x: number; y: number; width: number; height: number; speed: number }[],
     bugs: [] as { x: number; y: number; width: number; height: number; speed: number }[],
     lastHeartTime: 0,
@@ -28,7 +29,7 @@ export default function MiniGame() {
 
     // Reset game state
     gameState.current = {
-      player: { x: 50, y: 350, width: 30, height: 30, speed: 5 },
+      player: { x: 50, y: 350, width: 30, height: 30, speed: 20 }, // Увеличена скорость с 8 до 20
       hearts: [],
       bugs: [],
       lastHeartTime: 0,
@@ -40,6 +41,7 @@ export default function MiniGame() {
     setScore(0)
     setGameStarted(true)
     setGameOver(false)
+    setPlayerDirection("up") // Изменено с "right" на "up"
 
     // Start game loop
     requestAnimationFrame(gameLoop)
@@ -86,8 +88,8 @@ export default function MiniGame() {
       gameState.current.hearts.push({
         x: Math.random() * (canvas.width - 30),
         y: -30,
-        width: 20,
-        height: 20,
+        width: 24,
+        height: 24,
         speed: 2 + Math.random() * 2,
       })
       gameState.current.lastHeartTime = timestamp
@@ -98,29 +100,89 @@ export default function MiniGame() {
       gameState.current.bugs.push({
         x: Math.random() * (canvas.width - 30),
         y: -30,
-        width: 20,
-        height: 20,
+        width: 24,
+        height: 24,
         speed: 3 + Math.random() * 3,
       })
       gameState.current.lastBugTime = timestamp
     }
 
-    // Update and draw player
-    ctx.fillStyle = "#fbbf24"
-    ctx.fillRect(
-      gameState.current.player.x,
-      gameState.current.player.y,
-      gameState.current.player.width,
-      gameState.current.player.height,
-    )
+    // Update and draw player (Pac-Man style)
+    const player = gameState.current.player
+    ctx.fillStyle = "#fbbf24" // Желтый цвет
+    ctx.beginPath()
+    ctx.arc(player.x + player.width / 2, player.y + player.height / 2, player.width / 2, 0, Math.PI * 2)
+    ctx.fill()
+    ctx.fillStyle = "#000" // Черный цвет для глаза
+
+    // Рисуем рот в зависимости от направления
+    ctx.beginPath()
+    const mouthAngle = Math.PI / 4 // Угол открытия рта
+    let startAngle, endAngle
+
+    switch (playerDirection) {
+      case "right":
+        startAngle = -mouthAngle
+        endAngle = mouthAngle
+        break
+      case "left":
+        startAngle = Math.PI - mouthAngle
+        endAngle = Math.PI + mouthAngle
+        break
+      case "up":
+        startAngle = Math.PI * 1.5 - mouthAngle
+        endAngle = Math.PI * 1.5 + mouthAngle
+        break
+      case "down":
+        startAngle = Math.PI * 0.5 - mouthAngle
+        endAngle = Math.PI * 0.5 + mouthAngle
+        break
+      default:
+        startAngle = -mouthAngle
+        endAngle = mouthAngle
+    }
+
+    ctx.beginPath()
+    ctx.moveTo(player.x + player.width / 2, player.y + player.height / 2)
+    ctx.arc(player.x + player.width / 2, player.y + player.height / 2, player.width / 2, startAngle, endAngle)
+    ctx.closePath()
+    ctx.fillStyle = "#111827" // Цвет фона для рта
+    ctx.fill()
 
     // Update and draw hearts
-    ctx.fillStyle = "#ec4899"
     gameState.current.hearts.forEach((heart, index) => {
       heart.y += heart.speed
 
       // Draw heart
-      ctx.fillRect(heart.x, heart.y, heart.width, heart.height)
+      const heartX = heart.x + heart.width / 2
+      const heartY = heart.y + heart.height / 2
+      const heartSize = heart.width / 2
+
+      ctx.fillStyle = "#ec4899" // Розовый цвет для сердца
+
+      // Рисуем сердце
+      ctx.beginPath()
+      ctx.moveTo(heartX, heartY + heartSize * 0.3)
+      ctx.bezierCurveTo(heartX, heartY, heartX - heartSize, heartY - heartSize, heartX - heartSize, heartY)
+      ctx.bezierCurveTo(
+        heartX - heartSize,
+        heartY + heartSize * 0.8,
+        heartX,
+        heartY + heartSize * 1.5,
+        heartX,
+        heartY + heartSize * 1.5,
+      )
+      ctx.bezierCurveTo(
+        heartX,
+        heartY + heartSize * 1.5,
+        heartX + heartSize,
+        heartY + heartSize * 0.8,
+        heartX + heartSize,
+        heartY,
+      )
+      ctx.bezierCurveTo(heartX + heartSize, heartY - heartSize, heartX, heartY, heartX, heartY + heartSize * 0.3)
+      ctx.closePath()
+      ctx.fill()
 
       // Check collision with player
       if (
@@ -141,12 +203,55 @@ export default function MiniGame() {
     })
 
     // Update and draw bugs
-    ctx.fillStyle = "#ef4444"
     gameState.current.bugs.forEach((bug, index) => {
       bug.y += bug.speed
 
-      // Draw bug
-      ctx.fillRect(bug.x, bug.y, bug.width, bug.height)
+      // Draw bug (черный жук)
+      const bugX = bug.x + bug.width / 2
+      const bugY = bug.y + bug.height / 2
+      const bugSize = bug.width / 2
+
+      // Тело жука
+      ctx.fillStyle = "#000000" // Черный цвет для жука
+      ctx.beginPath()
+      ctx.ellipse(bugX, bugY, bugSize, bugSize * 0.7, 0, 0, Math.PI * 2)
+      ctx.fill()
+
+      // Голова
+      ctx.beginPath()
+      ctx.arc(bugX - bugSize * 0.5, bugY, bugSize * 0.4, 0, Math.PI * 2)
+      ctx.fill()
+
+      // Глаза
+      ctx.fillStyle = "#ff0000" // Красные глаза
+      ctx.beginPath()
+      ctx.arc(bugX - bugSize * 0.7, bugY - bugSize * 0.2, bugSize * 0.1, 0, Math.PI * 2)
+      ctx.fill()
+      ctx.beginPath()
+      ctx.arc(bugX - bugSize * 0.7, bugY + bugSize * 0.2, bugSize * 0.1, 0, Math.PI * 2)
+      ctx.fill()
+
+      // Лапки
+      ctx.strokeStyle = "#000000"
+      ctx.lineWidth = 2
+      // Верхние лапки
+      ctx.beginPath()
+      ctx.moveTo(bugX - bugSize * 0.3, bugY - bugSize * 0.5)
+      ctx.lineTo(bugX, bugY - bugSize)
+      ctx.stroke()
+      ctx.beginPath()
+      ctx.moveTo(bugX + bugSize * 0.3, bugY - bugSize * 0.5)
+      ctx.lineTo(bugX + bugSize * 0.8, bugY - bugSize)
+      ctx.stroke()
+      // Нижние лапки
+      ctx.beginPath()
+      ctx.moveTo(bugX - bugSize * 0.3, bugY + bugSize * 0.5)
+      ctx.lineTo(bugX, bugY + bugSize)
+      ctx.stroke()
+      ctx.beginPath()
+      ctx.moveTo(bugX + bugSize * 0.3, bugY + bugSize * 0.5)
+      ctx.lineTo(bugX + bugSize * 0.8, bugY + bugSize)
+      ctx.stroke()
 
       // Check collision with player
       if (
@@ -193,12 +298,25 @@ export default function MiniGame() {
       switch (e.key) {
         case "ArrowLeft":
           gameState.current.player.x = Math.max(0, gameState.current.player.x - gameState.current.player.speed)
+          setPlayerDirection("left")
           break
         case "ArrowRight":
           gameState.current.player.x = Math.min(
             canvas.width - gameState.current.player.width,
             gameState.current.player.x + gameState.current.player.speed,
           )
+          setPlayerDirection("right")
+          break
+        case "ArrowUp":
+          gameState.current.player.y = Math.max(0, gameState.current.player.y - gameState.current.player.speed)
+          setPlayerDirection("up")
+          break
+        case "ArrowDown":
+          gameState.current.player.y = Math.min(
+            canvas.height - gameState.current.player.height,
+            gameState.current.player.y + gameState.current.player.speed,
+          )
+          setPlayerDirection("down")
           break
       }
     }
@@ -253,8 +371,8 @@ export default function MiniGame() {
       </div>
 
       <div className="mt-6 text-xs text-center max-w-md">
-        <p className="mb-2">Управление: используйте стрелки влево и вправо для перемещения.</p>
-        <p>Цель: собирайте сердца (розовые квадраты) и избегайте багов (красные квадраты).</p>
+        <p className="mb-2">Управление: используйте стрелки для перемещения во всех направлениях.</p>
+        <p>Цель: собирайте сердца пользователей и избегайте багов-жуков на пути к успешному релизу!</p>
       </div>
     </div>
   )
