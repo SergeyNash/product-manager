@@ -70,7 +70,7 @@ export function SkillInventory() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="bg-gray-900 border-4 border-gray-700 rounded-lg p-6 max-w-3xl mx-auto">
+      <div className="bg-gray-900 border-4 border-gray-700 rounded-lg p-6 max-w-4xl mx-auto">
         <h2 className="text-xl text-yellow-400 mb-6 text-center">Инвентарь навыков</h2>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">

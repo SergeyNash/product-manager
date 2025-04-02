@@ -115,7 +115,7 @@ Tg-site: @nashquick`,
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="bg-gray-900 border-4 border-gray-700 rounded-lg max-w-3xl mx-auto overflow-hidden">
+      <div className="bg-gray-900 border-4 border-gray-700 rounded-lg max-w-4xl mx-auto overflow-hidden">
         {/* Terminal header */}
         <div className="bg-gray-800 p-2 flex items-center border-b border-gray-700">
           <div className="flex space-x-2 mr-2">

@@ -60,20 +60,6 @@ const defaultLocations: CareerLocation[] = [
     ],
     years: "2019-2021",
   },
-  {
-    id: "innovation-mountains",
-    name: "Горы продуктовых задач",
-    x: 85,
-    y: 25,
-    description:
-      "Исследование новых технологий и подходов к созданию продуктов. Экспериментирование с инновационными решениями и методологиями. Работа на передовой технологических трендов.",
-    achievements: [
-      "Внедрение AI в продукт",
-      "Проведение 5+ технологических исследований",
-      "Разработка концепции продукта следующего поколения",
-    ],
-    years: "2023-настоящее время",
-  },
 ]
 
 export async function getCareerLocations(): Promise<CareerLocation[]> {
@@ -99,7 +85,6 @@ export async function getCareerLocations(): Promise<CareerLocation[]> {
       "startup-forest": { x: 20, y: 70 },
       "corporate-castle": { x: 40, y: 40 },
       "product-ocean": { x: 70, y: 60 },
-      "innovation-mountains": { x: 85, y: 25 },
     }
 
     // Парсим каждую секцию
