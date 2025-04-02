@@ -66,7 +66,7 @@ export default function Contact() {
             response = {
               type: "response" as const,
               content: `Email: gdejivetmoya@gmail.com
-LinkedIn: linkedin.com/in/
+LinkedIn: https://ru.linkedin.com/in/sergey-sinyakov-2775644b
 Tg-site: @nashquick`,
             }
             break
