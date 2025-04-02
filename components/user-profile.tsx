@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Image from "/images/profile.jpg"
+import Image from "next/image"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import ReactMarkdown from "react-markdown"
 
