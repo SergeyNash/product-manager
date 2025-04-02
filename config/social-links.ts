@@ -10,7 +10,7 @@ export const socialLinks: SocialLink[] = [
   {
     id: "email",
     name: "Email",
-    url: "mailto:contact@pm-hero.com",
+    url: "	gdejivetmoya@gmail.com",
     icon: "Mail",
   },
   {
@@ -22,7 +22,7 @@ export const socialLinks: SocialLink[] = [
   {
     id: "linkedin",
     name: "LinkedIn",
-    url: "https://www.ptsecurity.com/ru-ru/",
+    url: "https://ru.linkedin.com/in/sergey-sinyakov-2775644b",
     icon: "Linkedin",
   },
 ]
