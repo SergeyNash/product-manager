@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import ReactMarkdown from "react-markdown"
 
@@ -65,7 +64,17 @@ export function UserProfile() {
               {/* Фото по ссылке */}
               <div className="md:col-span-1 flex flex-col items-center">
                 <div className="w-full max-w-xs aspect-square relative pixel-corners overflow-hidden border-4 border-gray-700">
-                  <Image src="https://clck.ru/3KSaGT" alt="Сергей" fill className="object-cover" />
+                  <img
+                    src="/images/profile.jpg"
+                    alt="Сергей"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    onError={(e) => {
+                      // Если изображение не загрузилось, заменяем на placeholder
+                      const target = e.target as HTMLImageElement
+                      target.onerror = null // Предотвращаем бесконечный цикл
+                      target.src = "/placeholder.svg?height=400&width=400"
+                    }}
+                  />
                 </div>
                 <div className="mt-4 bg-gray-800 p-3 w-full max-w-xs pixel-corners border-2 border-gray-700">
                   <h3 className="text-green-400 text-sm mb-2 font-['Press_Start_2P',monospace]">Характеристики:</h3>
