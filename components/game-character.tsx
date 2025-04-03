@@ -105,23 +105,7 @@ export function GameCharacter({ x, y }: GameCharacterProps) {
                        ${isMoving ? "animate-bounce" : ""}`}
           style={{ animationDuration: "0.5s" }}
         >
-          <span
-            className="text-2xl text-black font-bold"
-            style={{
-              transform: `rotate(${
-                direction === "up"
-                  ? "-90deg"
-                  : direction === "down"
-                    ? "90deg"
-                    : direction === "left"
-                      ? "180deg"
-                      : "0deg"
-              })`,
-              display: "inline-block",
-            }}
-          >
-            ᗧ
-          </span>
+          <span className="text-2xl">😎</span>
         </div>
 
         {/* Эффект движения */}

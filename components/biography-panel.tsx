@@ -11,7 +11,8 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import type { CareerLocation } from "@/lib/career-data"
 import { UserProfile } from "@/components/user-profile"
-import { BiographyPanel } from "@/components/biography-panel"
+import Image from "next/image"
+import ReactMarkdown from "react-markdown"
 
 // Предварительно загруженные данные о локациях (будут заменены на данные из API)
 const defaultLocations: CareerLocation[] = [
@@ -43,6 +44,83 @@ const defaultLocations: CareerLocation[] = [
     years: "2021-настоящее время",
   },
 ]
+
+export function BiographyPanel() {
+  const [biography, setBiography] = useState<string>("")
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    async function loadBiography() {
+      try {
+        const response = await fetch("/api/biography")
+        if (response.ok) {
+          const data = await response.json()
+          setBiography(data.content)
+        } else {
+          console.error("Ошибка при загрузке биографии:", response.statusText)
+        }
+      } catch (error) {
+        console.error("Ошибка при загрузке биографии:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadBiography()
+  }, [])
+
+  return (
+    <div className="h-full overflow-y-auto bg-gray-900 border-r-2 border-gray-700 p-4">
+      <h2 className="text-xl text-yellow-400 font-['Press_Start_2P',monospace] mb-6">Биография</h2>
+
+      {isLoading ? (
+        <div className="flex justify-center py-8">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-yellow-400"></div>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-6">
+          {/* Фото (слева) и характеристики (справа) */}
+          <div className="flex flex-col md:flex-row gap-4">
+            {/* Фото */}
+            <div className="md:w-1/2">
+              <div className="w-full aspect-square relative pixel-corners overflow-hidden border-4 border-gray-700">
+                <Image src="https://clck.ru/3KSaGT" alt="Сергей" fill className="object-cover" />
+              </div>
+            </div>
+
+            {/* Характеристики */}
+            {/*<div className="md:w-1/2 bg-gray-800 p-3 pixel-corners border-2 border-gray-700">
+              <h3 className="text-green-400 text-sm mb-2 font-['Press_Start_2P',monospace]">Характеристики:</h3>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div>Продуктовость:</div>
+                <div className="w-full h-3 bg-gray-700 rounded-full overflow-hidden">
+                  <div className="h-full bg-green-500" style={{ width: "90%" }}></div>
+                </div>
+                <div>Коммуникация:</div>
+                <div className="w-full h-3 bg-gray-700 rounded-full overflow-hidden">
+                  <div className="h-full bg-blue-500" style={{ width: "85%" }}></div>
+                </div>
+                <div>Аналитика:</div>
+                <div className="w-full h-3 bg-gray-700 rounded-full overflow-hidden">
+                  <div className="h-full bg-purple-500" style={{ width: "80%" }}></div>
+                </div>
+                <div>Стратегия:</div>
+                <div className="w-full h-3 bg-gray-700 rounded-full overflow-hidden">
+                  <div className="h-full bg-yellow-500" style={{ width: "95%" }}></div>
+                </div>
+              </div>
+            </div>*/}
+          </div>
+
+          {/* Текст биографии (под фото и характеристиками) */}
+          <div className="prose prose-invert max-w-none font-['Press_Start_2P',monospace] leading-relaxed text-xs">
+            <ReactMarkdown>{biography}</ReactMarkdown>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default function Home() {
   const [currentLocation, setCurrentLocation] = useState<string | null>(null)
