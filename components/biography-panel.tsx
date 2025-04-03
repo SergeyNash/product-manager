@@ -11,7 +11,6 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import type { CareerLocation } from "@/lib/career-data"
 import { UserProfile } from "@/components/user-profile"
-import Image from "next/image"
 import ReactMarkdown from "react-markdown"
 
 // Предварительно загруженные данные о локациях (будут заменены на данные из API)
@@ -84,11 +83,10 @@ export function BiographyPanel() {
             {/* Фото */}
             <div className="md:w-1/2">
               <div className="w-full aspect-square relative pixel-corners overflow-hidden border-4 border-gray-700">
-                <Image
-                  src="/placeholder.svg?height=400&width=400"
+                <img
+                  src="/images/profile.jpg"
                   alt="Сергей"
-                  fill
-                  className="object-cover"
+                  className="absolute inset-0 w-full h-full object-cover"
                   onError={(e) => {
                     // Если изображение не загрузилось, заменяем на placeholder
                     const target = e.target as HTMLImageElement

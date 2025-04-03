@@ -7,7 +7,7 @@ const nextConfig = {
   // Если вы используете пользовательский домен или публикуете в корне username.github.io,
   // оставьте basePath пустым или удалите эту строку
   basePath: process.env.NODE_ENV === 'production' ? '/product-manager-portfolio' : '',
-  // Отключаем генерацию изображений, так как GitHub Pages не поддерживает серверные компоненты
+  // Отключаем оптимизацию изображений, так как GitHub Pages не поддерживает серверные компоненты
   images: {
     unoptimized: true,
   },
