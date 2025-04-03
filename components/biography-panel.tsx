@@ -84,7 +84,18 @@ export function BiographyPanel() {
             {/* Фото */}
             <div className="md:w-1/2">
               <div className="w-full aspect-square relative pixel-corners overflow-hidden border-4 border-gray-700">
-                <Image src="https://clck.ru/3KSaGT" alt="Сергей" fill className="object-cover" />
+                <Image
+                  src="/placeholder.svg?height=400&width=400"
+                  alt="Сергей"
+                  fill
+                  className="object-cover"
+                  onError={(e) => {
+                    // Если изображение не загрузилось, заменяем на placeholder
+                    const target = e.target as HTMLImageElement
+                    target.onerror = null // Предотвращаем бесконечный цикл
+                    target.src = "/placeholder.svg?height=400&width=400"
+                  }}
+                />
               </div>
             </div>
 
