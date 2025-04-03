@@ -123,7 +123,18 @@ export function BiographyPanel() {
 
           {/* Текст биографии (под фото и характеристиками) */}
           <div className="prose prose-invert max-w-none font-['Press_Start_2P',monospace] leading-relaxed text-xs">
-            <ReactMarkdown>{biography}</ReactMarkdown>
+            <ReactMarkdown
+              components={{
+                h1: ({ node, ...props }) => <h1 className="text-yellow-400 text-lg mb-4" {...props} />,
+                h2: ({ node, ...props }) => <h2 className="text-green-400 text-base mb-3" {...props} />,
+                h3: ({ node, ...props }) => <h3 className="text-blue-400 text-sm mb-2" {...props} />,
+                p: ({ node, ...props }) => <p className="mb-4" {...props} />,
+                ul: ({ node, ...props }) => <ul className="space-y-2 mb-4" {...props} />,
+                li: ({ node, ...props }) => <li className="flex items-start" {...props} />,
+              }}
+            >
+              {biography}
+            </ReactMarkdown>
           </div>
         </div>
       )}
