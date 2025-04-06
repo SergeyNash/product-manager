@@ -1,5 +1,8 @@
 import type { MetadataRoute } from "next"
 
+// Добавляем эту строку для поддержки статического экспорта
+export const dynamic = "force-static"
+
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Продуктовый менеджер - Карта профессионального пути",

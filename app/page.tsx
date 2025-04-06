@@ -112,7 +112,7 @@ export default function Home() {
           setIsLoadingBlog(true)
           setBlogError(null)
 
-          const blogResponse = await fetch("/api/blog")
+          const blogResponse = await fetch("/api/blog-posts")
           if (!blogResponse.ok) {
             console.error("Ошибка при загрузке данных о статьях блога:", blogResponse.statusText)
             setBlogError(`Ошибка при загрузке данных о статьях блога: ${blogResponse.statusText}`)

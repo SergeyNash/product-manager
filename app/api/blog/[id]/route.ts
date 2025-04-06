@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server"
 import { getBlogPostById } from "@/lib/blog-data"
 
+// Добавляем эту строку для поддержки статического экспорта
+export const dynamic = "force-static"
+// Добавляем генерацию статических параметров
+export function generateStaticParams() {
+  return [{ id: "first-post" }, { id: "second-post" }, { id: "third-post" }, { id: "images-example" }]
+}
+
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
     const post = await getBlogPostById(params.id)

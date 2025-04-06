@@ -13,6 +13,9 @@ interface BlogPost {
   date: string
 }
 
+// Добавляем эту строку для поддержки статического экспорта
+export const dynamic = "force-static"
+
 export default function BlogListPage() {
   const router = useRouter()
   const [posts, setPosts] = useState<BlogPost[]>([])
@@ -20,12 +23,13 @@ export default function BlogListPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    // Изменяем URL для запроса списка статей
     const fetchPosts = async () => {
       setIsLoading(true)
       setError(null)
 
       try {
-        const response = await fetch("/api/blog")
+        const response = await fetch("/api/blog-posts")
 
         if (!response.ok) {
           throw new Error(`Ошибка загрузки: ${response.status}`)
