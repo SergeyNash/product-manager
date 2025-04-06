@@ -68,74 +68,70 @@ export function BiographyPanel() {
     loadBiography()
   }, [])
 
+  // Разделяем биографию на части для вставки фото
+  const bioSections = biography.split("\n\n")
+  const firstSection = bioSections.slice(0, 2).join("\n\n") // Заголовок и первый абзац
+  const remainingSection = bioSections.slice(2).join("\n\n") // Остальной текст
+
   return (
-    <div className="h-full overflow-y-auto bg-gray-900 border-r-2 border-gray-700 p-4">
-      <h2 className="text-xl text-yellow-400 font-['Press_Start_2P',monospace] mb-6">Биография</h2>
+    <div className="h-full overflow-y-auto bg-gray-900 border-r-0 md:border-r-2 border-b-2 md:border-b-0 border-gray-700 p-2 sm:p-4">
+      <h2 className="text-base sm:text-xl text-yellow-400 font-semibold mb-3 sm:mb-6">Биография</h2>
 
       {isLoading ? (
-        <div className="flex justify-center py-8">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-yellow-400"></div>
+        <div className="flex justify-center py-4 sm:py-8">
+          <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-t-2 border-b-2 border-yellow-400"></div>
         </div>
       ) : (
-        <div className="flex flex-col gap-6">
-          {/* Фото (слева) и характеристики (справа) */}
-          <div className="flex flex-col md:flex-row gap-4">
-            {/* Фото */}
-            <div className="md:w-1/2">
-              <div className="w-full aspect-square relative pixel-corners overflow-hidden border-4 border-gray-700">
-                <img
-                  src="/images/profile.jpg"
-                  alt="Сергей"
-                  className="absolute inset-0 w-full h-full object-cover"
-                  onError={(e) => {
-                    // Если изображение не загрузилось, заменяем на placeholder
-                    const target = e.target as HTMLImageElement
-                    target.onerror = null // Предотвращаем бесконечный цикл
-                    target.src = "/placeholder.svg?height=400&width=400"
-                  }}
-                />
-              </div>
+        <div className="prose prose-invert max-w-none leading-relaxed text-[10px] xs:text-xs sm:text-sm">
+          {/* Первая часть биографии (заголовок и первый абзац) */}
+          <ReactMarkdown
+            components={{
+              h1: ({ node, ...props }) => (
+                <h1 className="text-yellow-400 text-sm sm:text-xl mb-2 sm:mb-4 font-semibold" {...props} />
+              ),
+              h2: ({ node, ...props }) => (
+                <h2 className="text-green-400 text-xs sm:text-lg mb-1 sm:mb-3 font-semibold" {...props} />
+              ),
+              p: ({ node, ...props }) => <p className="mb-2 sm:mb-4" {...props} />,
+            }}
+          >
+            {firstSection}
+          </ReactMarkdown>
+
+          {/* Фото с обтеканием текста */}
+          <div className="sm:float-left sm:mr-4 mb-3 sm:mb-2 w-full sm:w-1/3 md:w-2/5">
+            <div className="w-full aspect-square relative overflow-hidden rounded-lg border-2 sm:border-4 border-gray-700 shadow-md">
+              <img
+                src="/images/profile.jpg"
+                alt="Сергей"
+                className="absolute inset-0 w-full h-full object-cover"
+                onError={(e) => {
+                  // Если изображение не загрузилось, заменяем на placeholder
+                  const target = e.target as HTMLImageElement
+                  target.onerror = null // Предотвращаем бесконечный цикл
+                  target.src = "/placeholder.svg?height=400&width=400"
+                }}
+              />
             </div>
-
-            {/* Характеристики */}
-            {/*<div className="md:w-1/2 bg-gray-800 p-3 pixel-corners border-2 border-gray-700">
-              <h3 className="text-green-400 text-sm mb-2 font-['Press_Start_2P',monospace]">Характеристики:</h3>
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div>Продуктовость:</div>
-                <div className="w-full h-3 bg-gray-700 rounded-full overflow-hidden">
-                  <div className="h-full bg-green-500" style={{ width: "90%" }}></div>
-                </div>
-                <div>Коммуникация:</div>
-                <div className="w-full h-3 bg-gray-700 rounded-full overflow-hidden">
-                  <div className="h-full bg-blue-500" style={{ width: "85%" }}></div>
-                </div>
-                <div>Аналитика:</div>
-                <div className="w-full h-3 bg-gray-700 rounded-full overflow-hidden">
-                  <div className="h-full bg-purple-500" style={{ width: "80%" }}></div>
-                </div>
-                <div>Стратегия:</div>
-                <div className="w-full h-3 bg-gray-700 rounded-full overflow-hidden">
-                  <div className="h-full bg-yellow-500" style={{ width: "95%" }}></div>
-                </div>
-              </div>
-            </div>*/}
           </div>
 
-          {/* Текст биографии (под фото и характеристиками) */}
-          <div className="prose prose-invert max-w-none font-['Press_Start_2P',monospace] leading-relaxed text-xs">
-            <ReactMarkdown
-              components={{
-                h1: ({ node, ...props }) => <h1 className="text-yellow-400 text-lg mb-4" {...props} />,
-                h2: ({ node, ...props }) => <h2 className="text-green-400 text-base mb-3" {...props} />,
-                h3: ({ node, ...props }) => <h3 className="text-blue-400 text-sm mb-2" {...props} />,
-                p: ({ node, ...props }) => <p className="mb-4" {...props} />,
-                ul: ({ node, ...props }) => <ul className="space-y-2 mb-4" {...props} />,
-                li: ({ node, ...props }) => <li className="flex items-start" {...props} />,
-              }}
-            >
-              {biography}
-            </ReactMarkdown>
-          </div>
+          {/* Остальной текст биографии */}
+          <ReactMarkdown
+            components={{
+              h3: ({ node, ...props }) => (
+                <h3 className="text-blue-400 text-xs sm:text-base mb-1 sm:mb-2 font-semibold" {...props} />
+              ),
+              p: ({ node, ...props }) => <p className="mb-2 sm:mb-4" {...props} />,
+              ul: ({ node, ...props }) => (
+                <ul className="space-y-1 sm:space-y-2 mb-2 sm:mb-4 list-disc pl-4" {...props} />
+              ),
+              li: ({ node, ...props }) => <li className="pl-1" {...props} />,
+              strong: ({ node, ...props }) => <strong className="text-green-300 font-semibold" {...props} />,
+              em: ({ node, ...props }) => <em className="text-purple-300 italic" {...props} />,
+            }}
+          >
+            {remainingSection}
+          </ReactMarkdown>
         </div>
       )}
     </div>

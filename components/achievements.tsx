@@ -36,7 +36,7 @@ export function Achievements() {
       id: "communication-wizard",
       name: "Маг коммуникации",
       icon: "🔮",
-      description: "Наладил эффективное взаимодействие между 5 разными отделами, говорящими на разных «языках».",
+      description: "Наладил эффективное взаимодействие ме��ду 5 разными отделами, говорящими на разных «языках».",
       rarity: "legendary",
       unlocked: true,
     },
@@ -122,20 +122,20 @@ export function Achievements() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="bg-gray-900 border-4 border-gray-700 rounded-lg p-6 max-w-4xl mx-auto">
-        <h2 className="text-xl text-yellow-400 mb-6 text-center">Таблица достижений</h2>
+    <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
+      <div className="bg-gray-900 border-2 sm:border-4 border-gray-700 rounded-lg p-3 sm:p-6 max-w-4xl mx-auto">
+        <h2 className="text-base sm:text-xl text-yellow-400 mb-3 sm:mb-6 text-center">Таблица достижений</h2>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4">
           {achievements.map((achievement) => (
             <div
               key={achievement.id}
-              className={`border-2 rounded-lg p-3 cursor-pointer transition-all duration-300 hover:scale-105 ${getRarityColor(achievement.rarity)} ${!achievement.unlocked ? "opacity-50 grayscale" : ""}`}
+              className={`border-2 rounded-lg p-2 sm:p-3 cursor-pointer transition-all duration-300 hover:scale-105 ${getRarityColor(achievement.rarity)} ${!achievement.unlocked ? "opacity-50 grayscale" : ""}`}
               onClick={() => setSelectedAchievement(achievement)}
             >
               <div className="flex flex-col items-center text-center">
-                <span className="text-3xl mb-2">{achievement.icon}</span>
-                <span className="text-xs">{achievement.name}</span>
+                <span className="text-2xl sm:text-3xl mb-1 sm:mb-2">{achievement.icon}</span>
+                <span className="text-[8px] sm:text-xs">{achievement.name}</span>
               </div>
             </div>
           ))}
@@ -143,13 +143,13 @@ export function Achievements() {
 
         {/* Achievement details */}
         {selectedAchievement && (
-          <div className={`mt-8 border-2 rounded-lg p-4 ${getRarityColor(selectedAchievement.rarity)}`}>
-            <div className="flex items-center mb-4">
-              <span className="text-4xl mr-4">{selectedAchievement.icon}</span>
+          <div className={`mt-4 sm:mt-8 border-2 rounded-lg p-2 sm:p-4 ${getRarityColor(selectedAchievement.rarity)}`}>
+            <div className="flex items-center mb-2 sm:mb-4">
+              <span className="text-3xl sm:text-4xl mr-2 sm:mr-4">{selectedAchievement.icon}</span>
               <div>
-                <h3 className="text-lg font-bold">{selectedAchievement.name}</h3>
+                <h3 className="text-base sm:text-lg font-bold">{selectedAchievement.name}</h3>
                 <span
-                  className={`text-xs px-2 py-1 rounded ${
+                  className={`text-[8px] sm:text-xs px-1 sm:px-2 py-0.5 sm:py-1 rounded ${
                     selectedAchievement.rarity === "legendary"
                       ? "bg-yellow-600"
                       : selectedAchievement.rarity === "epic"
@@ -164,10 +164,10 @@ export function Achievements() {
               </div>
             </div>
 
-            <p className="text-sm">{selectedAchievement.description}</p>
+            <p className="text-[10px] sm:text-sm">{selectedAchievement.description}</p>
 
             {!selectedAchievement.unlocked && (
-              <div className="mt-4 text-sm text-gray-400 border-t border-gray-700 pt-2">
+              <div className="mt-2 sm:mt-4 text-[10px] sm:text-sm text-gray-400 border-t border-gray-700 pt-1 sm:pt-2">
                 Это достижение еще не разблокировано.
               </div>
             )}

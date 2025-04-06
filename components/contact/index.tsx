@@ -114,24 +114,24 @@ Tg-site: @nashquick`,
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="bg-gray-900 border-4 border-gray-700 rounded-lg max-w-4xl mx-auto overflow-hidden">
+    <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
+      <div className="bg-gray-900 border-2 sm:border-4 border-gray-700 rounded-lg max-w-4xl mx-auto overflow-hidden">
         {/* Terminal header */}
-        <div className="bg-gray-800 p-2 flex items-center border-b border-gray-700">
-          <div className="flex space-x-2 mr-2">
-            <div className="w-3 h-3 rounded-full bg-red-500"></div>
-            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+        <div className="bg-gray-800 p-1 sm:p-2 flex items-center border-b border-gray-700">
+          <div className="flex space-x-1 sm:space-x-2 mr-1 sm:mr-2">
+            <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-red-500"></div>
+            <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-yellow-500"></div>
+            <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-500"></div>
           </div>
-          <div className="text-xs text-center flex-1">terminal@pm-hero ~ /contact</div>
+          <div className="text-[8px] sm:text-xs text-center flex-1">terminal@pm-hero ~ /contact</div>
         </div>
 
         {/* Terminal content */}
-        <div className="h-80 overflow-y-auto p-4 font-mono text-green-400 text-sm">
+        <div className="h-60 sm:h-80 overflow-y-auto p-2 sm:p-4 font-mono text-green-400 text-[10px] sm:text-sm">
           {messages.map((message, index) => (
             <div
               key={index}
-              className={`mb-2 ${
+              className={`mb-1 sm:mb-2 ${
                 message.type === "system"
                   ? "text-gray-400"
                   : message.type === "user"
@@ -155,22 +155,26 @@ Tg-site: @nashquick`,
         </div>
 
         {/* Input area */}
-        <div className="p-4 border-t border-gray-700 flex">
-          <span className="text-green-400 mr-2">$</span>
+        <div className="p-2 sm:p-4 border-t border-gray-700 flex">
+          <span className="text-green-400 mr-1 sm:mr-2">$</span>
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Введите сообщение или команду..."
-            className="flex-1 bg-gray-800 border-gray-700 text-green-400 focus-visible:ring-green-500"
+            className="flex-1 bg-gray-800 border-gray-700 text-green-400 focus-visible:ring-green-500 text-[10px] sm:text-sm h-8 sm:h-10"
           />
-          <Button onClick={handleSend} className="ml-2 bg-green-700 hover:bg-green-600" disabled={isTyping}>
-            <Send className="h-4 w-4" />
+          <Button
+            onClick={handleSend}
+            className="ml-1 sm:ml-2 bg-green-700 hover:bg-green-600 h-8 sm:h-10 px-2 sm:px-3"
+            disabled={isTyping}
+          >
+            <Send className="h-3 w-3 sm:h-4 sm:w-4" />
           </Button>
         </div>
 
         {/* Social links */}
-        <div className="p-4 border-t border-gray-700 flex justify-center space-x-6">
+        <div className="p-2 sm:p-4 border-t border-gray-700 flex justify-center space-x-4 sm:space-x-6">
           {socialLinks.map((link) => {
             // Динамически определяем иконку на основе строкового значения
             const IconComponent =
@@ -191,7 +195,7 @@ Tg-site: @nashquick`,
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <IconComponent className="h-6 w-6" />
+                <IconComponent className="h-5 w-5 sm:h-6 sm:w-6" />
               </a>
             )
           })}

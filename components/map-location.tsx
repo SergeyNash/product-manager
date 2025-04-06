@@ -23,7 +23,7 @@ export function MapLocation({ id, name, x, y, isNearby = false, onClick }: MapLo
           borderColor: "border-green-500",
           shadowColor: "shadow-green-500/50",
           icon: "🌲",
-          size: "w-14 h-14",
+          size: "w-10 h-10 sm:w-14 sm:h-14",
         }
       case "corporate-castle":
         return {
@@ -31,7 +31,7 @@ export function MapLocation({ id, name, x, y, isNearby = false, onClick }: MapLo
           borderColor: "border-indigo-500",
           shadowColor: "shadow-indigo-500/50",
           icon: "🏰",
-          size: "w-16 h-16",
+          size: "w-12 h-12 sm:w-16 sm:h-16",
         }
       case "product-ocean":
         return {
@@ -39,7 +39,7 @@ export function MapLocation({ id, name, x, y, isNearby = false, onClick }: MapLo
           borderColor: "border-blue-500",
           shadowColor: "shadow-blue-500/50",
           icon: "🌊",
-          size: "w-14 h-14",
+          size: "w-10 h-10 sm:w-14 sm:h-14",
         }
       case "innovation-mountains":
         return {
@@ -47,7 +47,7 @@ export function MapLocation({ id, name, x, y, isNearby = false, onClick }: MapLo
           borderColor: "border-purple-500",
           shadowColor: "shadow-purple-500/50",
           icon: "🏔️",
-          size: "w-15 h-15",
+          size: "w-11 h-11 sm:w-15 sm:h-15",
         }
       case "community-village":
         return {
@@ -55,7 +55,15 @@ export function MapLocation({ id, name, x, y, isNearby = false, onClick }: MapLo
           borderColor: "border-amber-500",
           shadowColor: "shadow-amber-500/50",
           icon: "🏘️",
-          size: "w-14 h-14",
+          size: "w-10 h-10 sm:w-14 sm:h-14",
+        }
+      case "library":
+        return {
+          bgColor: "bg-purple-800",
+          borderColor: "border-purple-500",
+          shadowColor: "shadow-purple-500/50",
+          icon: "📚",
+          size: "w-10 h-10 sm:w-14 sm:h-14",
         }
       default:
         return {
@@ -63,7 +71,7 @@ export function MapLocation({ id, name, x, y, isNearby = false, onClick }: MapLo
           borderColor: "border-gray-500",
           shadowColor: "shadow-gray-500/50",
           icon: "📍",
-          size: "w-12 h-12",
+          size: "w-8 h-8 sm:w-12 sm:h-12",
         }
     }
   }
@@ -92,27 +100,28 @@ export function MapLocation({ id, name, x, y, isNearby = false, onClick }: MapLo
         {/* Локация */}
         <div
           className={`${styles.size} ${styles.bgColor} rounded-lg flex items-center justify-center 
-                     border-2 ${isNearby ? "border-yellow-400 border-4" : styles.borderColor} shadow-lg ${styles.shadowColor} 
-                     ${isHovered || isNearby ? "shadow-xl" : ""} relative z-20`}
+                   border-2 ${isNearby ? "border-yellow-400 border-4" : styles.borderColor} shadow-lg ${styles.shadowColor} 
+                   ${isHovered || isNearby ? "shadow-xl" : ""} relative z-20`}
         >
-          <span className="text-2xl">{styles.icon}</span>
+          <span className="text-xl sm:text-2xl">{styles.icon}</span>
 
           {/* Маленькие декоративные элементы внутри локации */}
-          {id === "startup-forest" && <div className="absolute bottom-1 right-1 text-xs">🌱</div>}
-          {id === "corporate-castle" && <div className="absolute top-1 right-1 text-xs">👑</div>}
-          {id === "product-ocean" && <div className="absolute top-1 left-1 text-xs">🚢</div>}
-          {id === "innovation-mountains" && <div className="absolute bottom-1 left-1 text-xs">💡</div>}
-          {id === "community-village" && <div className="absolute top-1 right-1 text-xs">👥</div>}
+          {id === "startup-forest" && <div className="absolute bottom-1 right-1 text-[8px] sm:text-xs">🌱</div>}
+          {id === "corporate-castle" && <div className="absolute top-1 right-1 text-[8px] sm:text-xs">👑</div>}
+          {id === "product-ocean" && <div className="absolute top-1 left-1 text-[8px] sm:text-xs">🚢</div>}
+          {id === "innovation-mountains" && <div className="absolute bottom-1 left-1 text-[8px] sm:text-xs">💡</div>}
+          {id === "community-village" && <div className="absolute top-1 right-1 text-[8px] sm:text-xs">👥</div>}
+          {id === "library" && <div className="absolute bottom-1 right-1 text-[8px] sm:text-xs">📝</div>}
         </div>
 
         {/* Название локации */}
         {(isHovered || isNearby) && (
           <div
-            className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-900 px-3 py-2 
-                        rounded-lg text-xs whitespace-nowrap border border-gray-700 shadow-lg z-30"
+            className="absolute -top-8 sm:-top-10 left-1/2 transform -translate-x-1/2 bg-gray-900 px-2 py-1 sm:px-3 sm:py-2 
+                      rounded-lg text-[8px] sm:text-xs whitespace-nowrap border border-gray-700 shadow-lg z-30"
           >
-            <div className="font-bold text-center mb-1">{name}</div>
-            <div className="h-1 w-full bg-gradient-to-r from-transparent via-yellow-500 to-transparent"></div>
+            <div className="font-bold text-center mb-0.5 sm:mb-1">{name}</div>
+            <div className="h-0.5 sm:h-1 w-full bg-gradient-to-r from-transparent via-yellow-500 to-transparent"></div>
           </div>
         )}
       </div>

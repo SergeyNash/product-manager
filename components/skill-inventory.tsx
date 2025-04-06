@@ -69,54 +69,56 @@ export function SkillInventory() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="bg-gray-900 border-4 border-gray-700 rounded-lg p-6 max-w-4xl mx-auto">
-        <h2 className="text-xl text-yellow-400 mb-6 text-center">Инвентарь навыков</h2>
+    <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
+      <div className="bg-gray-900 border-2 sm:border-4 border-gray-700 rounded-lg p-3 sm:p-6 max-w-4xl mx-auto">
+        <h2 className="text-base sm:text-xl text-yellow-400 mb-3 sm:mb-6 text-center">Инвентарь навыков</h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4">
           {skills.map((skill) => (
             <div
               key={skill.id}
-              className="bg-gray-800 border-2 border-gray-600 rounded-lg p-3 cursor-pointer hover:border-yellow-400 transition-colors"
+              className="bg-gray-800 border-2 border-gray-600 rounded-lg p-2 sm:p-3 cursor-pointer hover:border-yellow-400 transition-colors"
               onClick={() => handleSkillClick(skill)}
             >
-              <div className="flex items-center mb-2">
-                <span className="text-2xl mr-2">{skill.icon}</span>
-                <span className="text-sm">{skill.name}</span>
+              <div className="flex items-center mb-1 sm:mb-2">
+                <span className="text-xl sm:text-2xl mr-1 sm:mr-2">{skill.icon}</span>
+                <span className="text-[10px] sm:text-sm">{skill.name}</span>
               </div>
 
               {/* Skill level bar */}
-              <div className="w-full h-4 bg-gray-700 rounded-full overflow-hidden border border-gray-600">
+              <div className="w-full h-3 sm:h-4 bg-gray-700 rounded-full overflow-hidden border border-gray-600">
                 <div
                   className="h-full bg-gradient-to-r from-green-500 to-green-400"
                   style={{ width: `${skill.level}%` }}
                 ></div>
               </div>
-              <div className="text-right text-xs mt-1 text-gray-400">{skill.level}/100</div>
+              <div className="text-right text-[8px] sm:text-xs mt-0.5 sm:mt-1 text-gray-400">{skill.level}/100</div>
             </div>
           ))}
         </div>
 
         {/* Skill details */}
         {selectedSkill && (
-          <div className="mt-8 bg-gray-800 border-2 border-gray-600 rounded-lg p-4">
-            <div className="flex items-center mb-4">
-              <span className="text-3xl mr-3">{selectedSkill.icon}</span>
+          <div className="mt-4 sm:mt-8 bg-gray-800 border-2 border-gray-600 rounded-lg p-2 sm:p-4">
+            <div className="flex items-center mb-2 sm:mb-4">
+              <span className="text-2xl sm:text-3xl mr-2 sm:mr-3">{selectedSkill.icon}</span>
               <div>
-                <h3 className="text-lg text-green-400">{selectedSkill.name}</h3>
-                <div className="flex items-center mt-1">
-                  <div className="w-32 h-3 bg-gray-700 rounded-full overflow-hidden">
+                <h3 className="text-base sm:text-lg text-green-400">{selectedSkill.name}</h3>
+                <div className="flex items-center mt-0.5 sm:mt-1">
+                  <div className="w-24 sm:w-32 h-2 sm:h-3 bg-gray-700 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-green-500 to-green-400"
                       style={{ width: `${selectedSkill.level}%` }}
                     ></div>
                   </div>
-                  <span className="text-xs ml-2 text-gray-400">Ур. {Math.floor(selectedSkill.level / 10)}</span>
+                  <span className="text-[8px] sm:text-xs ml-1 sm:ml-2 text-gray-400">
+                    Ур. {Math.floor(selectedSkill.level / 10)}
+                  </span>
                 </div>
               </div>
             </div>
 
-            <p className="text-sm text-gray-300">{selectedSkill.description}</p>
+            <p className="text-[10px] sm:text-sm text-gray-300">{selectedSkill.description}</p>
           </div>
         )}
       </div>

@@ -1,0 +1,73 @@
+/* Стили для страницы блога */
+.markdown-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+  display: block; /* Гарантирует, что изображение будет блочным элементом */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.markdown-content a {
+  color: #a78bfa; /* Фиолетовый цвет для ссылок */
+  text-decoration: none;
+}
+
+.markdown-content a:hover {
+  text-decoration: underline;
+}
+
+.markdown-content blockquote {
+  border-left: 4px solid #4b5563;
+  padding-left: 1rem;
+  font-style: italic;
+  margin: 1rem 0;
+  color: #9ca3af;
+}
+
+.markdown-content pre {
+  background-color: #1f2937;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+  border: 1px solid #374151;
+}
+
+.markdown-content code {
+  background-color: #1f2937;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  color: #e5e7eb;
+}
+
+.markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.markdown-content th,
+.markdown-content td {
+  border: 1px solid #374151;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.markdown-content th {
+  background-color: #1f2937;
+}
+
+/* Поддержка GIF и анимированных изображений */
+.markdown-content img[src$=".gif"] {
+  display: block;
+  border: 2px solid #4b5563;
+}
+
+/* Центрирование изображений с классом center */
+.markdown-content img.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
